@@ -1,15 +1,16 @@
 {
-  "name": "web-pair",
-  "version": "0.0.1",
-  "description": "A multi functional whatsapp bot Web paircode.",
+  "name": "tyrex-md-pair",
+  "version": "2.0.0",
+  "description": "TYREX MD - Advanced WhatsApp Bot with Pair Code System",
   "main": "./bmb.js",
   "scripts": {
-    "start": "pm2 start bmb.js --deep-monitoring --attach --name SESSIONSCANNERt",
-    "stop": "pm2 stop SESSIONSCANNERt",
-    "restart": "pm2 restart SESSIONSCANNERt"
+    "start": "pm2 start bmb.js --deep-monitoring --attach --name TYREXMD",
+    "stop": "pm2 stop TYREXMD",
+    "restart": "pm2 restart TYREXMD",
+    "dev": "node bmb.js"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "github:/Sila-Md/SILA.git",
+    "@whiskeysockets/baileys": "^6.7.9",
     "@adiwajshing/keyed-db": "^0.2.4",
     "qrcode": "^1.5.3",
     "awesome-phonenumber": "^2.64.0",
@@ -21,6 +22,22 @@
     "megajs": "1.1.7",
     "pm2": "^5.4.0",
     "async-mutex": "0.4.1",
-    "jimp": "^0.16.13"
-  }
+    "jimp": "^0.16.13",
+    "fs": "^0.0.1-security",
+    "axios": "^1.6.0",
+    "node-fetch": "^2.7.0"
+  },
+  "keywords": [
+    "tyrex-md",
+    "whatsapp-bot",
+    "pair-code",
+    "whatsapp-api"
+  ],
+  "author": "TYREX",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bugvirustechtyrex-bit/TyrexBot"
+  },
+  "homepage": "https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02"
 }
