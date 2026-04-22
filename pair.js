@@ -22,11 +22,11 @@ router.get('/', async (req, res) => {
     const id = makeid();
     let num = req.query.number;
 
-    async function SILA_MD_PAIR_CODE() {
+    async function TYREX_MD_PAIR_CODE() {
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
         
         try {
-            const items = ["Safari", "Chrome", "Firefox"];
+            const items = ["Safari", "Chrome", "Firefox", "Edge", "Brave", "Opera"];
             const randomItem = items[Math.floor(Math.random() * items.length)];
             
             let sock = makeWASocket({
@@ -57,108 +57,126 @@ router.get('/', async (req, res) => {
                     await delay(3000);
                     let rf = __dirname + `/temp/${id}/creds.json`;
 
-                    function generateSILA_ID() {
-                        const prefix = "SILA";
+                    function generateTYREX_ID() {
+                        const prefix = "TYREX";
                         const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                        let silaID = prefix;
+                        let tyrexID = prefix;
                         for (let i = prefix.length; i < 22; i++) {
-                            silaID += characters.charAt(Math.floor(Math.random() * characters.length));
+                            tyrexID += characters.charAt(Math.floor(Math.random() * characters.length));
                         }
-                        return silaID;
+                        return tyrexID;
                     }
                     
-                    const silaID = generateSILA_ID();
+                    const tyrexID = generateTYREX_ID();
 
                     try {
                         const mega_url = await upload(fs.createReadStream(rf), `${sock.user.id}.json`);
                         const string_session = mega_url.replace('https://mega.nz/file/', '');
-                        let session_code = "sila~" + string_session;
+                        let session_code = "tyrex~" + string_session;
                         
                         let code = await sock.sendMessage(sock.user.id, { text: session_code });
                         
-                        // ===== Message with BOX =====
-                        let desc =`┏━❑ *SILA-MD SESSION* ✅
-┏━❑ *SAFETY RULES* ━━━━━━━━━
-┃ 🔹 *Session ID:* Sent above.
-┃ 🔹 *Warning:* Do not share this code!.
-┃ 🔹 Keep this code safe.
-┃ 🔹 Valid for 24 hours only.
-┗━━━━━━━━━━━━━━━
-┏━❑ *CHANNEL* ━━━━━━━━━
-┃ 📢 Follow our channel: https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02
-┗━━━━━━━━━━━━━━━
-┏━❑ *REPOSITORY* ━━━━━━━━━
-┃ 💻 Repository: https://github.com/Sila-Md/SILA-MD
-┃ 👉 Fork & contribute!
-┗━━━━━━━━━━━━━━━
-
-> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 𝐒𝐢𝐥𝐚 𝐓𝐞𝐜𝐡`;
+                        // ===== Message with BOX for TYREX MD =====
+                        let desc =`┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃       🤖 TYREX MD 🤖          ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃  ✅ SESSION GENERATED         ┃
+┃                               ┃
+┃  📋 SAFETY RULES              ┃
+┃  🔹 Session ID: Sent above    ┃
+┃  🔹 ⚠️ Do not share this code!┃
+┃  🔹 Keep this code safe       ┃
+┃  🔹 Valid for 24 hours only   ┃
+┃                               ┃
+┃  📢 CHANNEL                    ┃
+┃  🔗 whatsapp.com/channel/     ┃
+┃     0029VbBG4gfISTkCpKxyMH02  ┃
+┃                               ┃
+┃  💻 REPOSITORY                 ┃
+┃  🔗 github.com/bugvirustech   ┃
+┃     tyrex-bit/TyrexBot        ┃
+┃  👉 Star & Fork!              ┃
+┃                               ┃
+┃  👑 OWNER                     ┃
+┃  🔗 wa.me/255628378557        ┃
+┃                               ┃
+┃  © Powered By TYREX TECH      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`;
 
                         await sock.sendMessage(sock.user.id, {
                             text: desc,
                             contextInfo: {
                                 externalAdReply: {
-                                    title: 'SILA MD',
-                                    body: '© Sila Tech',
-                                    thumbnailUrl: 'https://files.catbox.moe/36vahk.png',
+                                    title: 'TYREX MD',
+                                    body: '© Tyrex Tech',
+                                    thumbnailUrl: 'https://i.ibb.co/PsJQ5wcQ/RD32353637343330363638313140732e77686174736170702e6e6574-634462.jpg',
                                     thumbnailWidth: 64,
                                     thumbnailHeight: 64,
                                     sourceUrl: 'https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02',
-                                    mediaUrl: 'https://files.catbox.moe/36vahk.png',
+                                    mediaUrl: 'https://i.ibb.co/PsJQ5wcQ/RD32353637343330363638313140732e77686174736170702e6e6574-634462.jpg',
                                     showAdAttribution: true,
                                     renderLargerThumbnail: false,
                                     previewType: 'PHOTO',
                                     mediaType: 1
                                 },
                                 forwardedNewsletterMessageInfo: {
-                                    newsletterJid: '120363402325089913@newsletter',
-                                    newsletterName: '© Sila Tech',
+                                    newsletterJid: '120363424973782944@newsletter',
+                                    newsletterName: '✨ TYREX MD ✨',
                                     serverMessageId: Math.floor(Math.random() * 1000000)
                                 },
                                 isForwarded: true,
                                 forwardingScore: 999
                             }
-                        }, { quoted: ddd });
+                        }, { quoted: code });
 
                     } catch (e) {
                         let ddd = await sock.sendMessage(sock.user.id, { text: e.toString() });
                         
-                        let desc = `┏━❑ *SILA-MD SESSION* ⚠️
-┏━❑ *SAFETY RULES* ━━━━━━━━━
-┃ 🔹 *Session ID:* Sent above.
-┃ 🔹 *Error:* Session created with minor issues.
-┃ 🔹 Keep this code safe.
-┃ 🔹 Valid for 24 hours only.
-┗━━━━━━━━━━━━━━━
-┏━❑ *CHANNEL* ━━━━━━━━━
-┃ 📢 Follow our channel: https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02
-┗━━━━━━━━━━━━━━━
-┏━❑ *REPOSITORY* ━━━━━━━━━
-┃ 💻 Repository: https://github.com/Sila-Md/SILA-MD
-┃ 👉 Fork & contribute!
-┗━━━━━━━━━━━━━━━
-
-> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 𝐒𝐢𝐥𝐚 𝐓𝐞𝐜𝐡`;
+                        let desc = `┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃       🤖 TYREX MD 🤖          ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃  ⚠️ SESSION WARNING           ┃
+┃                               ┃
+┃  📋 SAFETY RULES              ┃
+┃  🔹 Session ID: Sent above    ┃
+┃  🔹 ⚠️ Do not share this code!┃
+┃  🔹 Keep this code safe       ┃
+┃  🔹 Valid for 24 hours only   ┃
+┃                               ┃
+┃  📢 CHANNEL                    ┃
+┃  🔗 whatsapp.com/channel/     ┃
+┃     0029VbBG4gfISTkCpKxyMH02  ┃
+┃                               ┃
+┃  💻 REPOSITORY                 ┃
+┃  🔗 github.com/bugvirustech   ┃
+┃     tyrex-bit/TyrexBot        ┃
+┃  👉 Star & Fork!              ┃
+┃                               ┃
+┃  👑 OWNER                     ┃
+┃  🔗 wa.me/255628378557        ┃
+┃                               ┃
+┃  © Powered By TYREX TECH      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`;
 
                         await sock.sendMessage(sock.user.id, {
                             text: desc,
                             contextInfo: {
                                 externalAdReply: {
-                                    title: 'SILA MD',
-                                    body: '© Sila Tech',
-                                    thumbnailUrl: 'https://files.catbox.moe/36vahk.png',
+                                    title: 'TYREX MD',
+                                    body: '© Tyrex Tech',
+                                    thumbnailUrl: 'https://i.ibb.co/PsJQ5wcQ/RD32353637343330363638313140732e77686174736170702e6e6574-634462.jpg',
                                     thumbnailWidth: 64,
                                     thumbnailHeight: 64,
                                     sourceUrl: 'https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02',
-                                    mediaUrl: 'https://files.catbox.moe/36vahk.png',
+                                    mediaUrl: 'https://i.ibb.co/PsJQ5wcQ/RD32353637343330363638313140732e77686174736170702e6e6574-634462.jpg',
                                     showAdAttribution: true,
                                     renderLargerThumbnail: false,
                                     previewType: 'PHOTO',
                                     mediaType: 1
                                 },
                                 forwardedNewsletterMessageInfo: {
-                                    newsletterJid: '120363402325089913@newsletter',
-                                    newsletterName: '© Sila Tech',
+                                    newsletterJid: '120363424973782944@newsletter',
+                                    newsletterName: '✨ TYREX MD ✨',
                                     serverMessageId: Math.floor(Math.random() * 1000000)
                                 },
                                 isForwarded: true,
@@ -170,24 +188,24 @@ router.get('/', async (req, res) => {
                     await delay(10);
                     await sock.ws.close();
                     await removeFile('./temp/' + id);
-                    console.log(`👤 ${sock.user.id} 🔥 SILA-MD Session Connected ✅`);
+                    console.log(`👤 ${sock.user.id} 🔥 TYREX MD Session Connected ✅`);
                     await delay(10);
                     process.exit();
 
                 } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
                     await delay(10);
-                    SILA_MD_PAIR_CODE();
+                    TYREX_MD_PAIR_CODE();
                 }
             });
             
         } catch (err) {
-            console.log("⚠️ SILA-MD Connection failed — Restarting service...");
+            console.log("⚠️ TYREX MD Connection failed — Restarting service...");
             await removeFile('./temp/' + id);
-            if (!res.headersSent) await res.send({ code: "❗ SILA-MD Service Unavailable" });
+            if (!res.headersSent) await res.send({ code: "❗ TYREX MD Service Unavailable" });
         }
     }
 
-    return await SILA_MD_PAIR_CODE();
+    return await TYREX_MD_PAIR_CODE();
 });
 
 module.exports = router;
