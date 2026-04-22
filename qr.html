@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SILA MD QR</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #00ff88; /* active color */
+  --expired: #ffe600; /* expired color */
+  --accent2: #00ffcc;
+  --bg-dark: #010101;
+  --glass: rgba(15, 15, 25, 0.85);
+  --text: #eaffff;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Orbitron', sans-serif;
+  background:url("https://files.catbox.moe/36vahk.png") center/cover no-repeat fixed;
+  color: var(--text);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Dark overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:0;
+  transition: background 0.3s ease;
+}
+
+/* Content Card */
+#content {
+  position: relative;
+  z-index:2;
+  width:360px;
+  margin:auto;
+  top:12%;
+  padding:28px;
+  border-radius:20px;
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(0,255,136,.25);
+  box-shadow:0 0 40px rgba(0,255,136,.4),0 0 50px rgba(255,255,0,.3);
+  text-align:center;
+}
+
+/* Header */
+#main {
+  font-size:1.4rem;
+  margin: 1rem 0 0.3rem 0;
+  font-family: 'Share Tech Mono', monospace;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.legend{
+  font-weight:400;
+  font-size:1rem;
+  margin-bottom:1rem;
+  color:#ddd;
+}
+
+/* QR Image */
+#QR-content img{
+  border-radius:14px;
+  width:250px;
+  box-shadow:0 0 25px var(--accent);
+  margin-bottom:1rem;
+}
+
+/* Neon Progress Bar */
+progress{
+  width:100%;
+  height:14px;
+  border-radius:7px;
+  overflow:hidden;
+  background:#111;
+  border:1px solid rgba(0,255,136,.4);
+  box-shadow:0 0 10px rgba(0,255,136,.3);
+}
+progress::-webkit-progress-bar{background:#111;}
+progress::-webkit-progress-value{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{filter:brightness(1);}
+  50%{filter:brightness(1.6);}
+  100%{filter:brightness(1);}
+}
+
+/* Reload Button */
+.reload-button{
+  display:inline-block;
+  margin-top:1.3rem;
+  padding:12px 24px;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  color:#001;
+  text-decoration:none;
+  border-radius:50px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:0.95rem;
+  box-shadow:0 0 20px rgba(0,255,150,.6);
+  transition:0.3s;
+}
+.reload-button:hover{
+  transform:scale(1.07);
+  box-shadow:0 0 28px rgba(0,255,150,.9);
+}
+
+/* Floating WhatsApp */
+.msg-btn{
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  background:linear-gradient(135deg,#25d366,#00ff88);
+  color:#001;
+  padding:14px 18px;
+  border-radius:50px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 0 25px rgba(0,255,136,.8);
+  animation:float 2s ease-in-out infinite;
+  z-index:5;
+}
+@keyframes float{50%{transform:translateY(-8px)}}
+
+/* Controls */
+.controls{
+  position:fixed;
+  bottom:22px;
+  left:22px;
+  display:flex;
+  gap:10px;
+  z-index:5;
+}
+.controls button{
+  padding:10px 14px;
+  border:none;
+  border-radius:50px;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  color:#001;
+  box-shadow:0 0 18px rgba(0,255,136,.6);
+}
+</style>
+</head>
+<body>
+
+<div id="content">
+  <div id="QR-content">
+    <img id="qr-image" src="/server" alt="QR CODE">
+  </div>
+  <div id="title-container">
+    <h2 id="main">SILA QR</h2>
+    <p class="legend" id="legend">Scan The QR Code</p>
+  </div>
+  <div id="description-container">
+    <progress value="0" max="30" id="progressBar"></progress>
+  </div>
+  <a href="javascript:history.go(0)" class="reload-button">⟳ Reload Page</a>
+</div>
+
+<!-- Floating WhatsApp -->
+<a class="msg-btn" href="https://wa.me/255789661031" target="_blank">💬 MESSAGE</a>
+
+<!-- Controls -->
+<div class="controls">
+  <button id="toggle-music">⏯ Play / Pause</button>
+  <button id="toggle-overlay">🌙 Overlay</button>
+</div>
+
+<audio id="bgm" src="https://files.catbox.moe/iwpfp2.mp3" loop></audio>
+
+<script>
+// Music
+const bgm=document.getElementById("bgm");
+document.addEventListener("click",()=>{if(bgm.paused) bgm.play()},{once:true});
+document.getElementById("toggle-music").onclick=()=>bgm.paused?bgm.play():bgm.pause();
+
+// Dark overlay toggle
+let overlayOn=true;
+document.getElementById("toggle-overlay").onclick=()=>{
+  overlayOn=!overlayOn;
+  const styleSheet=document.styleSheets[0];
+  for(let i=0;i<styleSheet.cssRules.length;i++){
+    if(styleSheet.cssRules[i].selectorText=="body::before"){
+      styleSheet.cssRules[i].style.background=`rgba(0,0,0,${overlayOn?.65:0})`;
+    }
+  }
+};
+
+// Progress bar
+let timeleft = 30;
+const progressBar = document.getElementById("progressBar");
+const mainTitle = document.getElementById("main");
+const legend = document.getElementById("legend");
+
+const downloadTimer = setInterval(()=>{
+  if(timeleft<=0){
+    clearInterval(downloadTimer);
+    progressBar.remove();
+    mainTitle.innerHTML="⚠ QR Expired! Please reload";
+    mainTitle.style.color="var(--expired)";
+    legend.innerHTML="";
+  } else {
+    progressBar.value=30-timeleft;
+    mainTitle.style.color="var(--accent)";
+    timeleft-=1;
+  }
+},1000);
+</script>
+
+</body>
+</html>
