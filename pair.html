@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SILA MD | PAIR CODE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --green:#00ff88;
+  --yellow:#ffe600;
+  --panel:rgba(6,20,30,.85);
+  --text:#eaffff;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  height:100%;
+  font-family:Rajdhani,sans-serif;
+  color:var(--text);
+  background:url("https://files.catbox.moe/36vahk.png") center/cover no-repeat fixed;
+  overflow:hidden;
+  position:relative;
+}
+
+/* Dark overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:0;
+  transition:background 0.3s ease;
+}
+
+/* CARD */
+.frame{
+  position:relative;
+  z-index:2;
+  max-width:400px;
+  margin:auto;
+  top:16%;
+  padding:34px;
+  border-radius:24px;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  text-align:center;
+  border:2px solid transparent;
+  animation:borderFlow 5s linear infinite;
+  box-shadow:0 0 50px rgba(0,255,136,.4);
+}
+
+@keyframes borderFlow{
+  0%{border-image:linear-gradient(0deg,var(--green),var(--yellow)) 1}
+  100%{border-image:linear-gradient(360deg,var(--green),var(--yellow)) 1}
+}
+
+/* HEADER */
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+
+.title{
+  font-family:JetBrains Mono,monospace;
+  font-size:1.15rem;
+  letter-spacing:3px;
+  color:var(--yellow);
+}
+
+/* LANGUAGE SWITCH */
+.lang{
+  display:flex;
+  gap:6px;
+}
+
+.lang button{
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.25);
+  background:#020814;
+  color:var(--text);
+  font-size:.7rem;
+  cursor:pointer;
+}
+
+.lang button.active{
+  background:linear-gradient(135deg,var(--yellow),var(--green));
+  color:#02140c;
+}
+
+/* SUBTITLE */
+#subtitle{
+  font-size:.7rem;
+  letter-spacing:.35em;
+  opacity:.85;
+  margin-bottom:22px;
+}
+
+/* INPUT */
+.input-container{
+  display:flex;
+  gap:12px;
+}
+
+input{
+  flex:1;
+  padding:14px;
+  border-radius:14px;
+  background:#020814;
+  border:1px solid rgba(0,255,136,.4);
+  color:var(--text);
+  font-family:JetBrains Mono;
+}
+
+button.main{
+  padding:14px 18px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--yellow),var(--green));
+  color:#02130c;
+}
+
+/* MESSAGE */
+#waiting-message{
+  display:none;
+  margin-top:18px;
+  padding:14px;
+  background:#010614;
+  border-radius:14px;
+  font-family:JetBrains Mono;
+  font-size:.9rem;
+  text-align:left;
+}
+
+#copy-btn{
+  display:none;
+  margin-top:18px;
+  width:100%;
+  border-radius:30px;
+  background:linear-gradient(135deg,#fff200,#00ff88);
+  font-weight:700;
+}
+
+/* FLOATING WHATSAPP */
+.msg-btn{
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  background:linear-gradient(135deg,#25d366,#00ff88);
+  color:#001;
+  padding:14px 18px;
+  border-radius:50px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 0 25px rgba(0,255,136,.8);
+  animation:float 2s ease-in-out infinite;
+  z-index:5;
+}
+
+@keyframes float{
+  50%{transform:translateY(-8px)}
+}
+
+/* CONTROL BUTTONS */
+.controls{
+  position:fixed;
+  bottom:22px;
+  left:22px;
+  display:flex;
+  gap:10px;
+  z-index:5;
+}
+
+.controls button{
+  padding:10px 14px;
+  border:none;
+  border-radius:50px;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--yellow),var(--green));
+  color:#02130c;
+  box-shadow:0 0 18px rgba(0,255,136,.6);
+}
+
+audio{display:none}
+</style>
+</head>
+
+<body>
+
+<div class="frame">
+  <div class="top">
+    <div class="title">SILA MD</div>
+    <div class="lang">
+      <button id="en" class="active">EN</button>
+      <button id="sw">SW</button>
+    </div>
+  </div>
+
+  <div id="subtitle"></div>
+
+  <div class="input-container">
+    <input id="number" type="number">
+    <button class="main" id="submit"></button>
+  </div>
+
+  <div id="waiting-message"></div>
+  <button id="copy-btn"></button>
+</div>
+
+<!-- Floating WhatsApp -->
+<a class="msg-btn" href="https://wa.me/255789661031" target="_blank">💬 MESSAGE</a>
+
+<!-- Controls -->
+<div class="controls">
+  <button id="toggle-music">⏯ Play / Pause</button>
+  <button id="toggle-overlay">🌙 Overlay</button>
+</div>
+
+<audio id="bgm" src="https://files.catbox.moe/iwpfp2.mp3" loop></audio>
+
+<script>
+/* MUSIC */
+const bgm=document.getElementById("bgm");
+document.addEventListener("click",()=>{if(bgm.paused) bgm.play()},{once:true});
+document.getElementById("toggle-music").onclick=()=>bgm.paused?bgm.play():bgm.pause();
+
+/* DARK OVERLAY */
+const overlay=document.body;
+let overlayOn=true;
+document.getElementById("toggle-overlay").onclick=()=>{
+  overlayOn=!overlayOn;
+  overlay.style.setProperty("--overlay-opacity", overlayOn?'.65':'0');
+  document.querySelector('body::before');
+  document.body.style.setProperty('--overlay-opacity', overlayOn?'.65':'0');
+  document.body.style.backgroundColor='rgba(0,0,0,'+(overlayOn?.65:0)+')';
+  // simple hack: adjust pseudo element
+  const styleEl = document.styleSheets[0];
+  for(let i=0;i<styleEl.cssRules.length;i++){
+    if(styleEl.cssRules[i].selectorText=='body::before'){
+      styleEl.cssRules[i].style.background=`rgba(0,0,0,${overlayOn?.65:0})`;
+    }
+  }
+};
+
+/* LANGUAGE DATA */
+const T={
+  en:{sub:"PAIR CODE SYSTEM",ph:"WhatsApp Number",enter:"ENTER",invalid:"Invalid WhatsApp number",gen:"Generating code...",code:"PAIR CODE: ",copy:"📋 COPY CODE",copied:"✔ COPIED"},
+  sw:{sub:"MFUMO WA PAIR CODE",ph:"Namba ya WhatsApp",enter:"INGIA",invalid:"Namba si sahihi",gen:"Inazalisha code...",code:"CODE: ",copy:"📋 NAKILI CODE",copied:"✔ IMENAKILIWA"}
+};
+
+let lang="en";
+const subtitle=document.getElementById("subtitle");
+const number=document.getElementById("number");
+const submit=document.getElementById("submit");
+const msg=document.getElementById("waiting-message");
+const copy=document.getElementById("copy-btn");
+
+function setLang(l){
+  lang=l;
+  subtitle.textContent=T[l].sub;
+  number.placeholder=T[l].ph;
+  submit.textContent=T[l].enter;
+  document.getElementById("en").classList.toggle("active",l==="en");
+  document.getElementById("sw").classList.toggle("active",l==="sw");
+}
+setLang("en");
+en.onclick=()=>setLang("en");
+sw.onclick=()=>setLang("sw");
+
+/* PAIR CODE LOGIC */
+submit.onclick=async()=>{
+  const v=number.value.replace(/\D/g,"");
+  if(!v||v.length<11){
+    msg.style.display="block"; msg.textContent=T[lang].invalid; copy.style.display="none"; return;
+  }
+  msg.style.display="block"; msg.textContent=T[lang].gen;
+  try{
+    const r=await fetch(`/code?number=${v}`);
+    const d=await r.json();
+    const code=d.code||"Unavailable";
+    msg.textContent=T[lang].code+code;
+    copy.style.display="block"; copy.textContent=T[lang].copy;
+    copy.onclick=()=>{navigator.clipboard.writeText(code); copy.textContent=T[lang].copied; setTimeout(()=>copy.textContent=T[lang].copy,2000);}
+  }catch{msg.textContent="Service error";}
+};
+</script>
+
+</body>
+</html>
