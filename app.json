@@ -1,9 +1,9 @@
 {
     "name": "TYREX-MD",
-    "description": "TYREX MD - Powerful WhatsApp Bot",
+    "description": "Pair Session Generator",
     "logo": "https://i.ibb.co/PsJQ5wcQ/RD32353637343330363638313140732e77686174736170702e6e6574-634462.jpg",
-    "repository": "https://github.com/bugvirustechtyrex-bit/TyrexBot",
-    "keywords": ["TYREX-MD", "TYREX-TECH", "WHATSAPP-BOT", "TYREXBOT"],
+    "repository": "https://github.com/Sila-Md/SILA-M.D",
+    "keywords": ["TYREX-MD", "TYREX-TECH", "TYREX-MD"],
     "success_url": "/", 
     "buildpacks": [{ "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest" } ],
     "env": {      
@@ -11,36 +11,6 @@
         "description": "Port for web app.4000,5000,3000... any!",
         "value": "5000",
         "required": false 
-      },
-      "SESSION_ID": {
-        "description": "Put your session ID here",
-        "value": "",
-        "required": true
-      },
-      "BOT_NAME": {
-        "description": "Name of your bot",
-        "value": "TYREX MD",
-        "required": true
-      },
-      "OWNER_NAME": {
-        "description": "Bot owner name",
-        "value": "Tyrex Tech",
-        "required": true
-      },
-      "OWNER_NUMBER": {
-        "description": "Bot owner number",
-        "value": "255628378557",
-        "required": true
-      },
-      "PREFIX": {
-        "description": "Bot command prefix",
-        "value": ".",
-        "required": false
-      },
-      "MODE": {
-        "description": "Bot mode (public/private)",
-        "value": "public",
-        "required": false
       }
     }   
 }
