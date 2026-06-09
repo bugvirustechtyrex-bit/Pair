@@ -4,10 +4,7 @@
   "description": "TYREX_KSH TECH - Advanced WhatsApp Bot with BASE24 Encryption",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "web": "node app.js",
-    "pair": "node pair.js",
-    "qr": "node qr.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "npm:gifted-baileys@2.0.6",
@@ -20,14 +17,12 @@
     "express": "^4.18.1",
     "path": "^0.12.7",
     "megajs": "1.1.7",
-    "pm2": "^5.4.0",
     "async-mutex": "0.4.1",
     "jimp": "^0.16.13",
     "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
     "yt-search": "^2.10.4",
     "chalk": "^5.3.0",
-    "fs-extra": "^11.2.0",
-    "crypto": "^1.0.1"
+    "fs-extra": "^11.2.0"
   }
 }
