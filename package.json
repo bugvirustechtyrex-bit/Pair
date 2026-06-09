@@ -1,39 +1,17 @@
 {
   "name": "tyrex-ksh-tech-web-pair",
   "version": "3.0.0",
-  "description": "TYREX_KSH TECH - Advanced WhatsApp Bot with BASE24 Encryption & Auto Follow Channel",
-  "main": "tyrex.js",
+  "description": "TYREX_KSH TECH - Advanced WhatsApp Bot with BASE24 Encryption",
+  "main": "app.js",
   "scripts": {
-    "start": "pm2 start tyrex.js --deep-monitoring --attach --name TYREX_KSH_BOT",
-    "stop": "pm2 stop TYREX_KSH_BOT",
-    "restart": "pm2 restart TYREX_KSH_BOT",
-    "delete": "pm2 delete TYREX_KSH_BOT",
-    "logs": "pm2 logs TYREX_KSH_BOT",
-    "dev": "node tyrex.js",
+    "start": "node app.js",
+    "web": "node app.js",
     "pair": "node pair.js",
     "qr": "node qr.js"
-  },
-  "keywords": [
-    "whatsapp-bot",
-    "tyrex-ksh-tech",
-    "base24-encryption",
-    "whatsapp-md",
-    "baileys",
-    "whatsapp-api",
-    "multi-device",
-    "auto-follow",
-    "whatsapp-newsletter"
-  ],
-  "author": "TYREX_KSH TECH",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bugvirustechtyrex-bit/TYREX_KSH-TKT"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "npm:gifted-baileys@2.0.6",
     "@adiwajshing/keyed-db": "^0.2.4",
-    "axios": "^1.6.2",
     "qrcode": "^1.5.3",
     "awesome-phonenumber": "^2.64.0",
     "pino": "^8.1.0",
@@ -45,13 +23,11 @@
     "pm2": "^5.4.0",
     "async-mutex": "0.4.1",
     "jimp": "^0.16.13",
+    "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
     "yt-search": "^2.10.4",
     "chalk": "^5.3.0",
-    "fs-extra": "^11.2.0"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "fs-extra": "^11.2.0",
+    "crypto": "^1.0.1"
   }
 }
