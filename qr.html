@@ -2,224 +2,646 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TYREX MD QR</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>TYREX_KSH TECH | QR SCAN</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root {
-  --accent: #00ff88; /* active color */
-  --expired: #ffe600; /* expired color */
-  --accent2: #00ffcc;
-  --bg-dark: #010101;
-  --glass: rgba(15, 15, 25, 0.85);
-  --text: #eaffff;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Orbitron', sans-serif;
-  background:url("https://files.catbox.moe/36vahk.png") center/cover no-repeat fixed;
-  color: var(--text);
-  overflow: hidden;
-  position: relative;
-}
+  :root {
+    --c1: #ff0000;
+    --c2: #ff7700;
+    --c3: #ffff00;
+    --c4: #00ff00;
+    --c5: #0000ff;
+    --c6: #4b0082;
+    --c7: #9400d3;
+    --c8: #00ffff;
+    --c9: #ff00ff;
+    --neon-green: #00ff88;
+    --neon-blue: #00f7ff;
+  }
 
-/* Dark overlay */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  z-index:0;
-  transition: background 0.3s ease;
-}
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Rajdhani', 'Orbitron', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0a0a1a, #030308);
+    overflow-x: hidden;
+    position: relative;
+  }
 
-/* Content Card */
-#content {
-  position: relative;
-  z-index:2;
-  width:360px;
-  margin:auto;
-  top:12%;
-  padding:28px;
-  border-radius:20px;
-  background: var(--glass);
-  backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(0,255,136,.25);
-  box-shadow:0 0 40px rgba(0,255,136,.4),0 0 50px rgba(255,255,0,.3);
-  text-align:center;
-}
+  /* Animated Stars */
+  .stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-/* Header */
-#main {
-  font-size:1.4rem;
-  margin: 1rem 0 0.3rem 0;
-  font-family: 'Share Tech Mono', monospace;
-  text-transform: uppercase;
-  color: var(--accent);
-}
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 3s infinite;
+  }
 
-.legend{
-  font-weight:400;
-  font-size:1rem;
-  margin-bottom:1rem;
-  color:#ddd;
-}
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
 
-/* QR Image */
-#QR-content img{
-  border-radius:14px;
-  width:250px;
-  box-shadow:0 0 25px var(--accent);
-  margin-bottom:1rem;
-}
+  /* Rainbow Wave */
+  .rainbow-wave {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7), var(--c1));
+    opacity: 0.06;
+    filter: blur(40px);
+    animation: waveMove 10s linear infinite;
+    z-index: 0;
+  }
 
-/* Neon Progress Bar */
-progress{
-  width:100%;
-  height:14px;
-  border-radius:7px;
-  overflow:hidden;
-  background:#111;
-  border:1px solid rgba(0,255,136,.4);
-  box-shadow:0 0 10px rgba(0,255,136,.3);
-}
-progress::-webkit-progress-bar{background:#111;}
-progress::-webkit-progress-value{
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%{filter:brightness(1);}
-  50%{filter:brightness(1.6);}
-  100%{filter:brightness(1);}
-}
+  @keyframes waveMove {
+    0% { transform: translateX(-20%); }
+    100% { transform: translateX(20%); }
+  }
 
-/* Reload Button */
-.reload-button{
-  display:inline-block;
-  margin-top:1.3rem;
-  padding:12px 24px;
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  color:#001;
-  text-decoration:none;
-  border-radius:50px;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:0.95rem;
-  box-shadow:0 0 20px rgba(0,255,150,.6);
-  transition:0.3s;
-}
-.reload-button:hover{
-  transform:scale(1.07);
-  box-shadow:0 0 28px rgba(0,255,150,.9);
-}
+  /* Main Card */
+  .qr-card {
+    position: relative;
+    z-index: 10;
+    max-width: 420px;
+    margin: 5% auto;
+    padding: 40px 35px;
+    background: rgba(8, 12, 25, 0.65);
+    backdrop-filter: blur(20px);
+    border-radius: 56px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: cardFloat 0.8s ease-out;
+    transition: all 0.3s ease;
+  }
 
-/* Floating WhatsApp */
-.msg-btn{
-  position:fixed;
-  bottom:22px;
-  right:22px;
-  background:linear-gradient(135deg,#25d366,#00ff88);
-  color:#001;
-  padding:14px 18px;
-  border-radius:50px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 0 25px rgba(0,255,136,.8);
-  animation:float 2s ease-in-out infinite;
-  z-index:5;
-}
-@keyframes float{50%{transform:translateY(-8px)}}
+  @keyframes cardFloat {
+    0% { opacity: 0; transform: translateY(60px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
-/* Controls */
-.controls{
-  position:fixed;
-  bottom:22px;
-  left:22px;
-  display:flex;
-  gap:10px;
-  z-index:5;
-}
-.controls button{
-  padding:10px 14px;
-  border:none;
-  border-radius:50px;
-  font-weight:700;
-  cursor:pointer;
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  color:#001;
-  box-shadow:0 0 18px rgba(0,255,136,.6);
-}
+  /* Animated Rainbow Border */
+  .qr-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7), var(--c1));
+    background-size: 200% 100%;
+    border-radius: 58px;
+    z-index: -1;
+    animation: borderMove 3s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes borderMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  /* Logo */
+  .logo-ultra {
+    margin-bottom: 20px;
+  }
+
+  .logo-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+  }
+
+  .ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+  }
+
+  .ring1 {
+    border-top-color: var(--c1);
+    border-right-color: var(--c2);
+    animation: spin 6s linear infinite;
+  }
+
+  .ring2 {
+    width: 75%;
+    height: 75%;
+    top: 12.5%;
+    left: 12.5%;
+    border-bottom-color: var(--c3);
+    border-left-color: var(--c4);
+    animation: spinReverse 4s linear infinite;
+  }
+
+  .ring3 {
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
+    border-top-color: var(--c5);
+    border-right-color: var(--c6);
+    animation: spin 3s linear infinite;
+  }
+
+  @keyframes spin {
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes spinReverse {
+    100% { transform: rotate(-360deg); }
+  }
+
+  .logo-icon {
+    position: absolute;
+    width: 45%;
+    height: 45%;
+    top: 27.5%;
+    left: 27.5%;
+    background: url('https://i.ibb.co/0przShNX/Tyrex-Ksh-Tech.jpg') center/cover no-repeat;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Title */
+  .title-area {
+    margin-bottom: 25px;
+  }
+
+  .main-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: textFlow 3s linear infinite;
+    letter-spacing: 2px;
+  }
+
+  @keyframes textFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: #888;
+    margin-top: 8px;
+  }
+
+  /* QR Code Container */
+  .qr-container {
+    background: white;
+    padding: 15px;
+    border-radius: 24px;
+    margin: 20px 0;
+    display: inline-block;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    animation: qrGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes qrGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.7); }
+  }
+
+  #qr-image {
+    width: 220px;
+    height: 220px;
+    border-radius: 16px;
+    display: block;
+  }
+
+  /* Progress Bar */
+  .progress-section {
+    margin: 20px 0;
+  }
+
+  .progress-label {
+    font-size: 0.7rem;
+    color: #aaa;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+
+  .neon-progress {
+    width: 100%;
+    height: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #111;
+    border: 1px solid rgba(0, 255, 136, 0.4);
+  }
+
+  .neon-progress::-webkit-progress-bar {
+    background: #111;
+  }
+
+  .neon-progress::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--c4), var(--c8), var(--c9));
+    animation: progressPulse 1.5s infinite;
+  }
+
+  @keyframes progressPulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.5); }
+  }
+
+  /* Timer Display */
+  .timer-display {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: var(--c4);
+  }
+
+  /* Expired Message */
+  .expired-message {
+    display: none;
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 20px;
+    border: 1px solid var(--c1);
+  }
+
+  .expired-message i {
+    color: var(--c1);
+    margin-right: 8px;
+  }
+
+  /* Buttons */
+  .btn-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .rainbow-btn {
+    padding: 12px 24px;
+    background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7));
+    background-size: 200% auto;
+    border: none;
+    border-radius: 40px;
+    color: #000;
+    font-weight: 700;
+    font-family: 'Orbitron', monospace;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    animation: btnFlow 3s linear infinite;
+  }
+
+  @keyframes btnFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .rainbow-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
+  }
+
+  /* Floating Elements */
+  .float-wa {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #25d366, #00ff88);
+    padding: 12px 22px;
+    border-radius: 50px;
+    color: #000;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Orbitron', monospace;
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+    animation: bounce 2s ease-in-out infinite;
+    z-index: 20;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .controls {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    display: flex;
+    gap: 12px;
+    z-index: 20;
+  }
+
+  .ctrl-btn {
+    padding: 10px 18px;
+    background: rgba(2, 8, 20, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 40px;
+    color: #00ff88;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .ctrl-btn:hover {
+    border-color: var(--c7);
+    box-shadow: 0 0 15px rgba(148, 0, 211, 0.3);
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: 'Share Tech Mono', monospace;
+    z-index: 20;
+  }
+
+  audio { display: none; }
+
+  @media (max-width: 480px) {
+    .qr-card {
+      margin: 10% 20px;
+      padding: 30px 25px;
+    }
+    #qr-image {
+      width: 180px;
+      height: 180px;
+    }
+    .main-title {
+      font-size: 1.3rem;
+    }
+    .btn-group {
+      flex-direction: column;
+    }
+    .float-wa {
+      padding: 8px 16px;
+      font-size: 0.7rem;
+    }
+    .controls {
+      bottom: 80px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div id="content">
-  <div id="QR-content">
+<div class="stars" id="stars"></div>
+<div class="rainbow-wave"></div>
+
+<div class="qr-card">
+  <!-- Logo -->
+  <div class="logo-ultra">
+    <div class="logo-ring">
+      <div class="ring ring1"></div>
+      <div class="ring ring2"></div>
+      <div class="ring ring3"></div>
+      <div class="logo-icon"></div>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div class="title-area">
+    <h1 class="main-title">TYREX_KSH TECH</h1>
+    <div class="subtitle">SCAN QR • PAIR DEVICE</div>
+  </div>
+
+  <!-- QR Code -->
+  <div class="qr-container">
     <img id="qr-image" src="/server" alt="QR CODE">
   </div>
-  <div id="title-container">
-    <h2 id="main">TYREX QR</h2>
-    <p class="legend" id="legend">Scan The QR Code</p>
+
+  <!-- Progress Section -->
+  <div class="progress-section">
+    <div class="progress-label">⏳ QR VALIDITY</div>
+    <progress id="progressBar" class="neon-progress" value="0" max="30"></progress>
+    <div class="timer-display" id="timer-display">⏰ 30 seconds remaining</div>
   </div>
-  <div id="description-container">
-    <progress value="0" max="30" id="progressBar"></progress>
+
+  <!-- Expired Message -->
+  <div id="expired-message" class="expired-message">
+    <i class="fas fa-exclamation-triangle"></i> QR CODE EXPIRED! PLEASE RELOAD.
   </div>
-  <a href="javascript:history.go(0)" class="reload-button">⟳ Reload Page</a>
+
+  <!-- Buttons -->
+  <div class="btn-group">
+    <button class="rainbow-btn" id="reload-btn">
+      <i class="fas fa-sync-alt"></i> RELOAD QR
+    </button>
+  </div>
 </div>
 
 <!-- Floating WhatsApp -->
-<a class="msg-btn" href="https://wa.me/255628378557" target="_blank">💬 MESSAGE</a>
+<a class="float-wa" href="https://wa.me/255628378557" target="_blank">
+  <i class="fab fa-whatsapp"></i> CONTACT OWNER
+</a>
 
 <!-- Controls -->
 <div class="controls">
-  <button id="toggle-music">⏯ Play / Pause</button>
-  <button id="toggle-overlay">🌙 Overlay</button>
+  <button class="ctrl-btn" id="toggle-music">🎵 MUSIC ON</button>
+  <button class="ctrl-btn" id="toggle-overlay">🌙 OVERLAY ON</button>
+  <button class="ctrl-btn" id="toggle-effects">✨ EFFECTS ON</button>
+</div>
+
+<div class="footer">
+  ⚡ TYREX_KSH TECH | © 2025-2026 | SECURE QR PAIRING
 </div>
 
 <audio id="bgm" src="https://files.catbox.moe/iwpfp2.mp3" loop></audio>
 
 <script>
-// Music
-const bgm=document.getElementById("bgm");
-document.addEventListener("click",()=>{if(bgm.paused) bgm.play()},{once:true});
-document.getElementById("toggle-music").onclick=()=>bgm.paused?bgm.play():bgm.pause();
+  // ========== STARS GENERATION ==========
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 150; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.width = Math.random() * 3 + 1 + 'px';
+    star.style.height = star.style.width;
+    star.style.animationDelay = Math.random() * 5 + 's';
+    star.style.animationDuration = Math.random() * 3 + 2 + 's';
+    starsContainer.appendChild(star);
+  }
 
-// Dark overlay toggle
-let overlayOn=true;
-document.getElementById("toggle-overlay").onclick=()=>{
-  overlayOn=!overlayOn;
-  const styleSheet=document.styleSheets[0];
-  for(let i=0;i<styleSheet.cssRules.length;i++){
-    if(styleSheet.cssRules[i].selectorText=="body::before"){
-      styleSheet.cssRules[i].style.background=`rgba(0,0,0,${overlayOn?.65:0})`;
+  // ========== QR TIMER ==========
+  let timeLeft = 30;
+  const progressBar = document.getElementById("progressBar");
+  const timerDisplay = document.getElementById("timer-display");
+  const expiredMsg = document.getElementById("expired-message");
+  const qrImage = document.getElementById("qr-image");
+  const reloadBtn = document.getElementById("reload-btn");
+  let timerInterval;
+
+  function startTimer() {
+    timeLeft = 30;
+    progressBar.value = 0;
+    expiredMsg.style.display = "none";
+    progressBar.style.display = "block";
+    timerDisplay.style.display = "block";
+    
+    if (timerInterval) clearInterval(timerInterval);
+    
+    timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        progressBar.style.display = "none";
+        timerDisplay.style.display = "none";
+        expiredMsg.style.display = "block";
+        
+        // Change QR to expired placeholder
+        qrImage.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23111'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff0000' font-size='16' font-family='monospace'%3EEXPIRED%3C/text%3E%3C/svg%3E";
+      } else {
+        timeLeft--;
+        progressBar.value = 30 - timeLeft;
+        timerDisplay.textContent = `⏰ ${timeLeft} second${timeLeft !== 1 ? 's' : ''} remaining`;
+        
+        // Change color when less than 10 seconds
+        if (timeLeft <= 10) {
+          timerDisplay.style.color = "#ff7700";
+        } else {
+          timerDisplay.style.color = "#00ff88";
+        }
+      }
+    }, 1000);
+  }
+
+  // Reload function
+  function reloadQR() {
+    qrImage.src = "/server?" + Date.now();
+    startTimer();
+  }
+
+  reloadBtn.onclick = reloadQR;
+
+  // Start timer on load
+  startTimer();
+
+  // Handle QR load error
+  qrImage.onerror = () => {
+    console.log("QR reloading...");
+    setTimeout(() => {
+      qrImage.src = "/server?" + Date.now();
+    }, 1000);
+  };
+
+  // ========== MUSIC CONTROL ==========
+  const bgm = document.getElementById("bgm");
+  let musicPlaying = false;
+
+  document.addEventListener("click", () => {
+    if (!musicPlaying && bgm.paused) {
+      bgm.play().catch(() => {});
+      musicPlaying = true;
+      document.getElementById("toggle-music").textContent = "🎵 MUSIC ON";
     }
-  }
-};
+  }, { once: true });
 
-// Progress bar
-let timeleft = 30;
-const progressBar = document.getElementById("progressBar");
-const mainTitle = document.getElementById("main");
-const legend = document.getElementById("legend");
+  document.getElementById("toggle-music").onclick = () => {
+    if (bgm.paused) {
+      bgm.play();
+      document.getElementById("toggle-music").textContent = "🎵 MUSIC ON";
+    } else {
+      bgm.pause();
+      document.getElementById("toggle-music").textContent = "🔇 MUSIC OFF";
+    }
+  };
 
-const downloadTimer = setInterval(()=>{
-  if(timeleft<=0){
-    clearInterval(downloadTimer);
-    progressBar.remove();
-    mainTitle.innerHTML="⚠ QR Expired! Please reload";
-    mainTitle.style.color="var(--expired)";
-    legend.innerHTML="";
-  } else {
-    progressBar.value=30-timeleft;
-    mainTitle.style.color="var(--accent)";
-    timeleft-=1;
+  // ========== OVERLAY TOGGLE ==========
+  let overlayOn = true;
+  let overlayStyle = document.createElement('style');
+  overlayStyle.id = 'overlay-style';
+
+  document.getElementById("toggle-overlay").onclick = () => {
+    overlayOn = !overlayOn;
+    const existing = document.getElementById('overlay-style');
+    if (existing) existing.remove();
+    overlayStyle.textContent = `body::before { background: rgba(0,0,0,${overlayOn ? '0.65' : '0'}); }`;
+    document.head.appendChild(overlayStyle);
+    document.getElementById("toggle-overlay").innerHTML = overlayOn ? "🌙 OVERLAY ON" : "☀️ OVERLAY OFF";
+  };
+
+  // ========== EFFECTS TOGGLE ==========
+  let effectsOn = true;
+  const wave = document.querySelector('.rainbow-wave');
+  const starsEl = document.getElementById('stars');
+
+  document.getElementById("toggle-effects").onclick = () => {
+    effectsOn = !effectsOn;
+    wave.style.opacity = effectsOn ? "0.06" : "0";
+    starsEl.style.opacity = effectsOn ? "1" : "0.2";
+    document.getElementById("toggle-effects").innerHTML = effectsOn ? "✨ EFFECTS ON" : "💤 EFFECTS OFF";
+  };
+
+  // ========== 3D TILT EFFECT ==========
+  const card = document.querySelector('.qr-card');
+  let cardBounds = card.getBoundingClientRect();
+
+  function updateBounds() {
+    cardBounds = card.getBoundingClientRect();
   }
-},1000);
+
+  window.addEventListener('resize', updateBounds);
+  updateBounds();
+
+  document.addEventListener('mousemove', (e) => {
+    const mouseX = (e.clientX - cardBounds.left) / cardBounds.width;
+    const mouseY = (e.clientY - cardBounds.top) / cardBounds.height;
+    const rotateY = (mouseX - 0.5) * 10;
+    const rotateX = (mouseY - 0.5) * 10;
+    
+    card.style.transform = `
+      perspective(1000px)
+      rotateX(${-rotateX}deg)
+      rotateY(${rotateY}deg)
+      translateY(0)
+    `;
+  });
+
+  document.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+  });
 </script>
-
 </body>
 </html>
